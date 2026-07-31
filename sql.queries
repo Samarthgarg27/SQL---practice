@@ -1,0 +1,121 @@
+-- Create Database
+CREATE DATABASE CompanyDB;
+
+-- Use Database
+USE CompanyDB;
+
+-- Create Table
+CREATE TABLE Employee (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Department VARCHAR(30),
+    Salary INT,
+    Age INT
+);
+
+-- Insert Records
+INSERT INTO Employee VALUES
+(1,'Alice','HR',50000,25),
+(2,'Bob','IT',70000,28),
+(3,'Charlie','Finance',65000,30),
+(4,'David','IT',80000,35),
+(5,'Eva','HR',55000,27);
+
+-- 1. Display all records
+SELECT * FROM Employee;
+
+-- 2. Display employee names
+SELECT Name FROM Employee;
+
+-- 3. Employees with salary > 60000
+SELECT * FROM Employee
+WHERE Salary > 60000;
+
+-- 4. Employees in IT department
+SELECT * FROM Employee
+WHERE Department='IT';
+
+-- 5. Sort by salary
+SELECT * FROM Employee
+ORDER BY Salary DESC;
+
+-- 6. Count employees
+SELECT COUNT(*) FROM Employee;
+
+-- 7. Maximum salary
+SELECT MAX(Salary) FROM Employee;
+
+-- 8. Minimum salary
+SELECT MIN(Salary) FROM Employee;
+
+-- 9. Average salary
+SELECT AVG(Salary) FROM Employee;
+
+-- 10. Total salary
+SELECT SUM(Salary) FROM Employee;
+
+-- 11. Group by department
+SELECT Department, COUNT(*)
+FROM Employee
+GROUP BY Department;
+
+-- 12. Departments with more than one employee
+SELECT Department, COUNT(*)
+FROM Employee
+GROUP BY Department
+HAVING COUNT(*) > 1;
+
+-- 13. Employees between ages 25 and 30
+SELECT * FROM Employee
+WHERE Age BETWEEN 25 AND 30;
+
+-- 14. Employees whose name starts with A
+SELECT * FROM Employee
+WHERE Name LIKE 'A%';
+
+-- 15. Update salary
+UPDATE Employee
+SET Salary=75000
+WHERE EmpID=2;
+
+-- 16. Delete employee
+DELETE FROM Employee
+WHERE EmpID=5;
+
+-- Create Department Table
+CREATE TABLE Department(
+    DeptID INT PRIMARY KEY,
+    DeptName VARCHAR(30)
+);
+
+INSERT INTO Department VALUES
+(1,'HR'),
+(2,'IT'),
+(3,'Finance');
+
+-- 17. Inner Join
+SELECT e.Name,d.DeptName
+FROM Employee e
+INNER JOIN Department d
+ON e.Department=d.DeptName;
+
+-- 18. Left Join
+SELECT e.Name,d.DeptName
+FROM Employee e
+LEFT JOIN Department d
+ON e.Department=d.DeptName;
+
+-- 19. Employees with salary above average
+SELECT *
+FROM Employee
+WHERE Salary>(
+SELECT AVG(Salary)
+FROM Employee
+);
+
+-- 20. Create View
+CREATE VIEW EmployeeView AS
+SELECT Name,Salary
+FROM Employee;
+
+SELECT * FROM EmployeeView;
